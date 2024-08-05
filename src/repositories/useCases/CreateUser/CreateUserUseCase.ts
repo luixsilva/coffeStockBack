@@ -3,12 +3,27 @@ import { UserRepository } from "../../implementations/UserRepository";
 import { ICreateUserRequestDTO } from "./CreateUserDTO";
 
 export class CreateUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) { }
 
   async execute(data: ICreateUserRequestDTO) {
-    const user = new User(data);
+    try {
 
-    await this.userRepository.save(user);
-    console.log("user created", user); // Verifique se o usuário está correto aqui
+
+      // Cria uma instância da classe User para lógica de negócios
+      const user = new User(data);
+
+      await this.userRepository.save(user);
+      console.log("User created", user); // Verifique se o usuário está correto aqui
+
+      return {
+        status: 200,
+        message: `Usuário ${user.name} criado com sucesso`
+      }
+    } catch (erro: any) {
+      return {
+        status: 500,
+        message: "Falha ao criar usuário"
+      }
+    }
   }
 }

@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";  // Importe o pacote CORS
 import { router } from "./routes/routes";
+import { connect } from "../src/dbConnection/dbConnection"
 const app = express();
+
+connect();
 
 app.use(
   cors({
